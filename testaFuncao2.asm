@@ -20,10 +20,10 @@ str3: .string "com erros!"
 0
 
 VT: 1000 1001 6 9 11 17 1006 1007 1008 1009 20 22 24 26 28 30 32 1017 1018 2 1020 1021 1022
-main:   #loco str1
-        #push
-        #call imprime_str
-        #insp 1
+main:   loco str1
+        push
+        call imprime_str
+        insp 1
 		
         loco  strT1
         push
