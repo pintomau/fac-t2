@@ -89,44 +89,55 @@ n_opcoes_end:
 pos_opcoes_string:
 
     # STACK
-    # 0 - caracter limite
-    # 1 - end. ret
-    # 2 - n
-    # 3 - endB
-    # 4 - endA
+    # 0 - n temporario
+    # 1 - end B temporario
+    # 2 - end A temporario
+    # 3 - caracter limite
+    # 4 - end. ret
+    # 5 - n
+    # 6 - endB
+    # 7 - endA
 
     loco '/'
     push        # caracter limite (cl)
+    lodl 4
+    push        # end A temporario
+    lodl 4
+    push        # end B temporario
+    lodl 4
+    push        # N temporario
 
 pos_opcoes_ciclo:
 
-    # while
-    # n > 0
-    lodl 2              # ac = n
-    jzer pos_opcoes_end # sair quando opções esgotaram (n == 0)
+    lodl 0              # ac = n
+    jzer pos_opcoes_end
 
-        # str[endA] != 0
-        lodl 4              # ac = endA
-        pshi                # m[--sp] = m[ac]
-        pop                 # AC = m[sp++]
-    jzer pos_opcoes_end # sair quando str[endA] == 0
-        incl 4                  # endA++
 
-        # do
-        # subtrair cl
-        subl 0                  # ac = ac - '/'
-    jnze pos_opcoes_ciclo   # ciclo seguinte se ac != '/'
-        lodl 4                  # ac = endA
-        push                    # (--sp) = ac
-        #decl 0                  # m[sp]--
-        lodl 4                  # ac = endB
-        popi                    # m[ac] = m[sp]
-        incl 3                  # endB++
-        decl 2                  # n--
+        lodl 2  # ac = endA
+        pshi
+        pop     # ac = Caracter em A
+
+        incl 2  # Incrementar end a para próximo caracter
+
+    jzer pos_opcoes_end
+
+        subl 3  # comparar com caracter separador
+    
+    jnze pos_opcoes_ciclo
+    
+        lodl 2  # ac = end A
+        push    # ac = Início é na posição seguinte, (SP + 1)
+
+        lodl 2
+        popi    # guardar posição no vector b
+
+        incl 1  # endB++
+        decl 0  # n--
+
     jump pos_opcoes_ciclo
 
 pos_opcoes_end:
-    insp 1  # limpar caracter limite
+    insp 4  # limpar caracter limite
     retn
 
     
