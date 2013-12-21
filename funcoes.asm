@@ -20,42 +20,41 @@
 #
 #######################################################
 
-# Posicoes stack
-# contador = 0
-# caracter = 1
-# end. retorno = 2
-# end string a = 3
-
 n_opcoes_string:
 
     # STACK
-    # 0 - contador
-    # 1 - caracter
-    # 2 - end. retorno
-    # 3 - end string a
+    # 0 - end string a (temp)
+    # 1 - contador
+    # 2 - caracter
+    # 3 - end. retorno
+    # 4 - end string a
 
     loco '/'
     push            # caracter limite
     loco 0
     push            # contador de opcoes
+    lodl 3
+    push            # end string a temporario
 
 n_opcoes_ciclo:
     
-    lodl 3          # ac = endA
-    pshi            # (--sp) = m[ac]
-    pop             # ac = m[sp++]
+    lodl 0          # ac = end string A
+    pshi
+    pop     # ac = caracter em A
     jzer n_opcoes_end
     
-        subl 1          # comparar com caracter
-        incl 3          # incrementar ponteiro endA
+        subl 2          # comparar com caracter
+        incl 0          # incrementar ponteiro endA
+
     jnze n_opcoes_ciclo
     
-        incl 0          # incrementar contador
+        incl 1          # incrementar contador
+        
     jump n_opcoes_ciclo
 
 n_opcoes_end:
-    lodl 0          # ac = contador
-    insp 2          # limpar locais
+    lodl 1          # ac = contador
+    insp 3          # limpar locais
     retn
     
 
