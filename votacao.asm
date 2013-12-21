@@ -1,4 +1,4 @@
 str_nome_votacao: .string "Quem vai ganhar o mundial de 2014?"
 0
-str_opcoes_votacao: .string "Portugal/Espanha/Alemanha/Brasil/Argentina"
+str_opcoes_votacao: .string "/a/b"
 0
