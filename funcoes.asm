@@ -137,7 +137,7 @@ pos_opcoes_ciclo:
     jump pos_opcoes_ciclo
 
 pos_opcoes_end:
-    insp 4  # limpar caracter limite
+    insp 4  # limpar locais
     retn
 
     
@@ -236,6 +236,89 @@ calcular_resultados_multiplicador_ciclo:
         
 	
 calcular_resultados_end:
-    insp 3
+    insp 3 # limpar locais
     retn
 
+
+    
+    
+    
+#######################################################
+#     Funcao: nova_ordenacao
+# 
+# Argumentos: endereço vector a, tamanho do vector (n)
+#
+# Devolve em AC: -
+#
+# Descricao: A função nova_ordenacao deve preencher o
+#            vector A com uma ordenação aleatória dos
+#            números compreendidos entre 0 e n-1
+#
+# Disposicao dos argumentos no stack: 
+#         +----------------+
+#  SP --> |  end. retorno  |
+#         +----------------+ 
+#         |       n        |
+#         +----------------+
+#         |  end vector a  |
+#         +----------------+
+#
+#######################################################
+
+nova_ordenacao:
+
+    # STACK
+    # 0 - n (temp)
+    # 1 - end. retorno
+    # 2 - n
+    # 3 - end a
+
+    lodl 1
+    push    # n temporario
+
+nova_ordenacao_preencher_vector_ciclo:
+
+    decl 0  # decrementar n
+    lodl 0  # ac = n
+    jneg nova_ordenacao_fisher_yates
+
+        push    # guardar valor n actual, (SP + 1)
+        
+        addl 4  # posicionar índice com end. a
+        popi    # colocar n no vector, (SP - 1)
+    
+    jump nova_ordenacao_preencher_vector_ciclo
+
+    
+    
+nova_ordenacao_fisher_yates:
+
+    lodl 2
+    stol 0  # recolocar n temp
+    
+nova_ordenacao_fisher_yates_ciclo:
+
+    decl 0  # decrementar n
+    lodl 0  # ac = n
+    jzer nova_ordenacao_end
+    
+        lodl 3
+        push    # end A
+        
+        lodl 1
+        push    # n
+        
+        push
+        incl 0  # n + 1 (para random index)
+        
+        call random_number
+        stol 0  # substituir pelo random index
+        
+        call troca_elementos_vector
+        insp 3
+    
+    jump nova_ordenacao_fisher_yates_ciclo
+    
+nova_ordenacao_end:
+    insp 1
+    retn
