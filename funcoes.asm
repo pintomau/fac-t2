@@ -180,8 +180,8 @@ calcular_resultados:
 	
     loco 100 
     push
-    loco 0  # Nº Votos
-    push
+    loco 0
+    push    # Nº Votos
     push    # contador
 
 calcular_resultados_votos_ciclo:
