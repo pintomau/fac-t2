@@ -292,33 +292,38 @@ nova_ordenacao_preencher_vector_ciclo:
     
     
 nova_ordenacao_fisher_yates:
-
+    
+    # STACK
+    # 0 - n (índice para troca)
+    # 1 - end a
+    # 2 - end. retorno
+    # 3 - n
+    # 4 - end a
+    
+    lodl 3
+    stol 0  # end A config para troca de elementos
+    
     lodl 2
-    stol 0  # recolocar n temp
+    push  # n (temp)
     
 nova_ordenacao_fisher_yates_ciclo:
 
     decl 0  # decrementar n
     lodl 0  # ac = n
     jzer nova_ordenacao_end
-    
-        lodl 3
-        push    # end A
         
-        lodl 1
-        push    # n
-        
-        push
-        incl 0  # n + 1 (para random index)
+        push    # n (para random index)
+        incl 0  # incrementar índice n + 1 (para cálculo aleatório)
         
         call random_number
         stol 0  # substituir pelo random index
         
         call troca_elementos_vector
-        insp 3
+        
+        insp 1
     
     jump nova_ordenacao_fisher_yates_ciclo
     
 nova_ordenacao_end:
-    insp 1
+    insp 2
     retn
