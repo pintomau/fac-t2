@@ -8,6 +8,10 @@ jump main
 str_escolha_opcao: .string "Escolha uma opção :"
 10
 0
+
+str_new_line:
+10
+0
 	
 v_posicoes_voto:    0 0 0 0 0 0 0 0 
 v_votos:            0 0 0 0 0 0 0 0 
@@ -85,7 +89,12 @@ imprime_opcoes_ciclo:
         lodl 1
         pshi
         call imprime_str
-        insp 1
+        
+        loco str_new_line
+        push
+        call imprime_str
+        
+        insp 2
         
         incl 1
         decl 0
