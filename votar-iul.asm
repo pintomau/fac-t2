@@ -289,7 +289,7 @@ imprime_resultados_ciclo_end:
 .include "funcoes"
 
 terminar:
-insp 1
+insp 2
 halt
 
 
